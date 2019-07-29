@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#504de4</color>
+    <color name="colorPrimaryDark">#ffffff</color>
+    <color name="colorAccent">#000</color>
+    <color name="textHint">#B9B9B9</color>
+
+    <color name="facebookButton">#485995</color>
+    <color name="twitterButton">#5ba1f3</color>
+
+    <color name="fabBackgourdTine">#fd0285</color>
+</resources>

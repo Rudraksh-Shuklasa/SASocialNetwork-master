@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+            android:layout_width="@dimen/_116sdp"
+            android:layout_height="@dimen/_116sdp"
+            android:layout_margin="@dimen/_16sdp">
+
+        <ImageView
+                android:id="@+id/ImgPhotosFeed"
+                android:layout_width="match_parent"
+                android:padding="@dimen/_4sdp"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_avatar_profile"/>
+    </androidx.cardview.widget.CardView>
+    
+
+</androidx.constraintlayout.widget.ConstraintLayout>

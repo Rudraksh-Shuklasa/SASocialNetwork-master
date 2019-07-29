@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">SASocial Network</string>
+
+
+    <string name="hint_email_login">Email</string>
+    <string name="titile_appbar_login">Log In</string>
+    <string name="hint_password_login">Password</string>
+    <string name="txt_forgotpassword_login">Forget Password?</string>
+    <string name="txt_btn_login">Login</string>
+    <string name="txt_or_login">OR</string>
+    <string name="btn_facebook_login">Facebook</string>
+    <string name="btn_twitter_login">Twitter</string>
+
+
+
+
+    <string name="titile_appbar_signup">Sign Up</string>
+    <string name="hint_conformation_signup">Conformation Password</string>
+    <string name="btn_signup">Sign Up</string>
+
+    <string name="facebook_app_id">663848910788077</string>
+    <string name="fb_login_protocol_scheme">fb663848910788077</string>
+    <string name="discripition_post_dialog">Write Your Description</string>
+</resources>
