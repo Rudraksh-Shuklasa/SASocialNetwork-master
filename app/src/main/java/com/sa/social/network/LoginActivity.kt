@@ -46,6 +46,7 @@ class LoginActivity : AppCompatActivity() {
         FacebookSdk.sdkInitialize(getApplicationContext())
         AppEventsLogger.activateApp(applicationContext)
         setContentView(R.layout.activity_login)
+
         window.statusBarColor = ContextCompat.getColor(this, R.color.colorPrimary)
         var signUpString ="Dont have an account?<font color='#504de4'> Sgn Up</font>"
         txtSignup.setText(Html.fromHtml(signUpString))
@@ -90,9 +91,6 @@ class LoginActivity : AppCompatActivity() {
             val signInIntent = mGoogleSignInClient.getSignInIntent()
             startActivityForResult(signInIntent, RC_SIGN_IN)
         }
-
-
-
 
         loginViewModel.getCurrentUser().observe(this, Observer<Boolean> {
             if(it)

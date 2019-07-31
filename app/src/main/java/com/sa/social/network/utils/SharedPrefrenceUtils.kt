@@ -8,13 +8,12 @@ import android.view.autofill.AutofillValue
 
 public class SharedPrefrenceUtils{
 
-
-
     companion object {
         private var mSharedPref: SharedPreferences? = null
          var IsLogin : String = "IsLogin"
          var IsOpenFirstTime : String = "IsOpenFirstTime"
-         var CurrentUser : String="CurrentUser"
+         var CurrentUserId : String="CurrentUserId"
+         var CurrentUserName : String="CurrentUserName"
          var AuthnticationType : String ="AuthnticationType"
 
          public fun getSharefPrefrenceManager(context : Context): SharedPreferences?
@@ -23,6 +22,11 @@ public class SharedPrefrenceUtils{
                  mSharedPref=context.getSharedPreferences(context.packageName,Activity.MODE_PRIVATE)
              return mSharedPref
          }
+
+        fun deleteSharedPrefrence(context: Context)
+        {
+            context.getSharedPreferences(context.packageName, 0).edit().clear().commit();
+        }
 
      }
 

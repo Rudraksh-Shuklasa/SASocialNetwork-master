@@ -21,11 +21,18 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.sa.social.network.adapter.PostsAdapterProfile
+import com.sa.social.network.adapter.PostsFeedAdapter
+import com.sa.social.network.model.Posts
 import com.sa.social.network.viewmodel.HomeViewModel
 import com.sa.social.network.viewmodel.ProfileViewModel
 import kotlinx.android.synthetic.main.dialog_post.view.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
+import kotlinx.android.synthetic.main.fragment_profile.view.*
+import kotlinx.android.synthetic.main.item_feed_post.view.*
 import java.io.IOException
 
 
@@ -50,11 +57,33 @@ class HomeFragment : Fragment(){
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view =inflater.inflate(com.sa.social.network.R.layout.fragment_home, container, false);
+
+        var profilePostsData=homeViewModel.getPostFeed()
+
+
+        view.RcyPostFeedHome.apply {
+            layoutManager=  GridLayoutManager(activity,1)
+            adapter = PostsFeedAdapter(profilePostsData,context!!,homeViewModel)
+        }
+
+        homeViewModel.getPostFeedLiveData().observe(this, Observer<ArrayList<Posts>> {
+            var profilePostsData=homeViewModel.getPostFeed()
+            (view.RcyPostFeedHome.adapter as PostsFeedAdapter).notifyDataSetChanged()
+            profilePostsData=it
+        })
+
         homeViewModel.getImageUploadLiveData().observe(this, Observer<Boolean> {
             if(it){
                 PrgUploadImageHome.visibility=View.GONE
             }
 
+        })
+
+        view.SwpLytFeedHome.setOnRefreshListener(object : SwipeRefreshLayout.OnRefreshListener{
+            override fun onRefresh() {
+                (view.RcyPostFeedHome.adapter as PostsFeedAdapter).notifyDataSetChanged()
+                view.SwpLytFeedHome.isRefreshing=false
+            }
         })
 
         view.FabAddImageFeedHome.setOnClickListener {
@@ -153,11 +182,11 @@ class HomeFragment : Fragment(){
         val  mAlertDialog = mBuilder.show()
         mDialogView.ImgPostImageDialog.setImageBitmap(bitmap)
 
-        val descripition=mDialogView.EdtDescripitionPostdialog.text.toString()
 
 
 
         mDialogView.BtnUploadPostDialog.setOnClickListener {
+            val descripition=mDialogView.EdtDescripitionPostdialog.text.toString()
             PrgUploadImageHome.visibility=View.VISIBLE
             homeViewModel.uploadImage(bitmap,descripition)
             mAlertDialog.dismiss()

@@ -12,15 +12,13 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.FirebaseApp
 import com.sa.social.network.utils.SharedPrefrenceUtils
-import kotlin.coroutines.coroutineContext
-import com.sa.social.network.MainActivity
-import androidx.annotation.NonNull
 import com.facebook.AccessToken
 import com.google.firebase.auth.*
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.core.FirestoreClient
-import com.sa.social.network.base.BaseApplication
 
+
+
+///this repo containt all function regardin Authntication
 
 class AuthnticationRepositorie(context: Context){
 
@@ -56,11 +54,8 @@ class AuthnticationRepositorie(context: Context){
             if(task.isSuccessful){
                  if(mAuth.currentUser != null)
                  {
-                     editor.putBoolean(SharedPrefrenceUtils.IsLogin,true)
-                     editor.putString(SharedPrefrenceUtils.CurrentUser, mAuth.currentUser!!.uid)
                      editor.putInt(SharedPrefrenceUtils.AuthnticationType,0)
                      editor.commit()
-
                      currentUSer.postValue(true)
                      addUserToFireStore(mAuth.currentUser!!)
                  }
@@ -83,7 +78,11 @@ class AuthnticationRepositorie(context: Context){
                 {
                     currentUSer.postValue(true)
                     editor.putBoolean(SharedPrefrenceUtils.Companion.IsLogin,true)
+                    editor.putBoolean(SharedPrefrenceUtils.IsLogin,true)
+                    editor.putString(SharedPrefrenceUtils.CurrentUserId, mAuth.currentUser!!.uid)
+                    editor.putString(SharedPrefrenceUtils.CurrentUserName, mAuth.currentUser!!.displayName)
                     editor.commit()
+
                 }
             }else{
                 Toast.makeText(mContext,task.exception!!.message,Toast.LENGTH_SHORT).show()
@@ -104,12 +103,9 @@ class AuthnticationRepositorie(context: Context){
                 if (task.isSuccessful) {
                     if(mAuth.currentUser != null)
                     {
-                        editor.putBoolean(SharedPrefrenceUtils.IsLogin,true)
-                        editor.putString(SharedPrefrenceUtils.CurrentUser, mAuth.currentUser!!.uid)
+                        currentUSer.postValue(true)
                         editor.putInt(SharedPrefrenceUtils.AuthnticationType,1)
                         editor.commit()
-
-                        currentUSer.postValue(true)
                         addUserToFireStore(mAuth.currentUser!!)
                     }
                 } else {
@@ -136,12 +132,10 @@ class AuthnticationRepositorie(context: Context){
                         val user = mAuth.getCurrentUser()
                         if (task.isSuccessful) {
                             if (mAuth.currentUser != null) {
-                                editor.putBoolean(SharedPrefrenceUtils.IsLogin, true)
-                                editor.putString(SharedPrefrenceUtils.CurrentUser, mAuth.currentUser!!.uid)
+                                currentUSer.postValue(true)
                                 editor.putInt(SharedPrefrenceUtils.AuthnticationType,2)
                                 editor.commit()
 
-                                currentUSer.postValue(true)
                                 addUserToFireStore(mAuth.currentUser!!)
                             }
                         }
@@ -160,7 +154,10 @@ class AuthnticationRepositorie(context: Context){
 
 
     fun addUserToFireStore(user:FirebaseUser){
-
+        editor.putBoolean(SharedPrefrenceUtils.IsLogin,true)
+        editor.putString(SharedPrefrenceUtils.CurrentUserId, mAuth.currentUser!!.uid)
+        editor.putString(SharedPrefrenceUtils.CurrentUserName, mAuth.currentUser!!.displayName)
+        editor.commit()
         var curretUserInfor=User(user.email!!, user.displayName!!,user.metadata!!.creationTimestamp,user.uid,"")
         fireDbInstance.collection("User")
             .document(curretUserInfor!!.userId)

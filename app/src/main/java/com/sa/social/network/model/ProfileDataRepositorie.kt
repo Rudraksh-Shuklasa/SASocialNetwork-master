@@ -14,19 +14,20 @@ import com.google.firebase.storage.UploadTask
 import com.sa.social.network.utils.SharedPrefrenceUtils
 import java.io.ByteArrayOutputStream
 import androidx.lifecycle.MutableLiveData
-import java.util.*
 import kotlin.collections.ArrayList
 
+///this repo containt all function regardin profile data fetch and all
 
-class DataRepositorie (context: Context){
+class ProfileDataRepositorie (context: Context){
     private var storage : FirebaseStorage
     private var storageRef : StorageReference
     private var sharedPrefManager= SharedPrefrenceUtils.Companion.getSharefPrefrenceManager(context)
     private var fireDbInstance : FirebaseFirestore
     private var TAG =this.javaClass.simpleName
     private var profileData= MutableLiveData<ArrayList<Posts>>()
+    private var editor= sharedPrefManager!!.edit()
     private var userData= MutableLiveData<User>()
-    private var isImageUpload= MutableLiveData<Boolean>()
+
 
     init {
         storage=FirebaseStorage.getInstance("gs://sasocialmedia-e200c.appspot.com")
@@ -34,24 +35,32 @@ class DataRepositorie (context: Context){
         fireDbInstance = FirebaseFirestore.getInstance()
     }
 
-    fun getProfileLiveData(): MutableLiveData<ArrayList<Posts>> {
+    //User object live data
+    fun getProfilePostLiveData(): MutableLiveData<ArrayList<Posts>> {
         return profileData
     }
 
-    fun getImageUploadLiveData():MutableLiveData<Boolean> {
-        return isImageUpload
-    }
+
+    // user object live data
     fun getUserLiveData():MutableLiveData<User>{
         return userData
     }
 
+
+    //fetch profile post
     fun getProfilePostsData():ArrayList<Posts>{
         var posts=ArrayList<Posts>()
         val questionsRef = fireDbInstance.collection("Posts")
-        questionsRef.whereEqualTo("userId", sharedPrefManager!!.getString(SharedPrefrenceUtils.CurrentUser,"user")).get().addOnCompleteListener { task ->
+        questionsRef.whereEqualTo("userId", sharedPrefManager!!.getString(SharedPrefrenceUtils.CurrentUserId,"user")).get().addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 for (document in task.result!!) {
-                    var post=Posts(document["postId"].toString(),document["userId"].toString(),document["photosUrl"].toString(), document["timestamp"] as Long,document["descripition"].toString(),document["likes"] as Long)
+                    var post=Posts(document["postId"].toString(),
+                                   document["userId"].toString(),
+                                   document["photosUrl"].toString(),
+                                   document["timestamp"] as Long,
+                                   document["descripition"].toString(),
+                                   document["likes"] as Long,
+                                   document["userName"].toString(), document["userName"] as Long,false)
                     posts.add(post)
                 }
                 profileData.postValue(posts)
@@ -64,10 +73,13 @@ class DataRepositorie (context: Context){
 
     }
 
-    fun uploadImage(image: Bitmap,comment : String){
 
+
+    //upload profile picture
+    fun uploadProfilePhoto(image: Bitmap, user: User)
+    {
         val timestamp = (System.currentTimeMillis() / 1000).toString()
-        val mountainsRef = storageRef.child(sharedPrefManager!!.getString(SharedPrefrenceUtils.CurrentUser,"user")+"_"+timestamp)
+        val mountainsRef = storageRef.child(sharedPrefManager!!.getString(SharedPrefrenceUtils.CurrentUserId,"user")+"_"+timestamp)
 
         val baos = ByteArrayOutputStream()
         image.compress(Bitmap.CompressFormat.JPEG, 60, baos)
@@ -90,7 +102,8 @@ class DataRepositorie (context: Context){
             return@Continuation mountainsRef.downloadUrl
         }).addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                addPostToUserfeed(task.result.toString(),comment)
+                user.profilePhotoUrl=task.result.toString()
+                updateUser(user)
             } else {
                 Log.d(TAG,task.toString())
             }
@@ -98,27 +111,11 @@ class DataRepositorie (context: Context){
 
     }
 
-    fun addPostToUserfeed(uri:String,comment:String){
-
-        val timestamp = (System.currentTimeMillis() / 1000)
-        var postId=UUID.randomUUID().toString() + timestamp.toString()
-        var post=Posts(postId,sharedPrefManager!!.getString(SharedPrefrenceUtils.CurrentUser,"user"),uri,timestamp,comment,0)
-        fireDbInstance.collection("Posts")
-            .document()
-            .set(post)
-            .addOnSuccessListener {
-                isImageUpload.postValue(true)
-            }
-            .addOnFailureListener {
-                Log.d(TAG,it.message)
-            }
-
-    }
-
+     //get current profile
     fun getProfile():User
     {
         var user = User()
-        val questionsRef = fireDbInstance.collection("User")
+        val questionsRef = fireDbInstance.collection("User").whereEqualTo("userId", sharedPrefManager!!.getString(SharedPrefrenceUtils.CurrentUserId,"user"))
         val addOnCompleteListener = questionsRef.get().addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 Log.d(TAG, task.result!!.toString())
@@ -136,4 +133,25 @@ class DataRepositorie (context: Context){
         }
         return user
     }
+
+
+
+    //update user profile
+     fun updateUser(user:User)
+    {
+        var curretUserInfor=user
+        fireDbInstance.collection("User")
+            .document(curretUserInfor!!.userId)
+            .set(curretUserInfor)
+            .addOnSuccessListener {
+                Log.d(TAG,"User Profile Updated")
+                editor.putString(SharedPrefrenceUtils.CurrentUserName,curretUserInfor.userName)
+                editor.commit()
+            }
+            .addOnFailureListener {
+                Log.d(TAG,it.message)
+            }
+        getProfile()
+    }
+
 }

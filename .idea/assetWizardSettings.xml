@@ -18,7 +18,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/home/rudrakshshukla/Documents/android-studio-ide-182.5199772-linux/android-studio/plugins/android/lib/android.jar!/images/material_design_icons/navigation/ic_close_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/home/rudrakshshukla/Documents/android-studio-ide-182.5199772-linux/android-studio/plugins/android/lib/android.jar!/images/material_design_icons/editor/ic_insert_comment_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -28,9 +28,7 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="assetSourceType" value="FILE" />
-                            <entry key="color" value="ff1312" />
-                            <entry key="outputName" value="ic_check_mark_edit_profile_menu" />
+                            <entry key="outputName" value="ic_comment_post_feed" />
                             <entry key="sourceFile" value="$USER_HOME$/Downloads/check.svg" />
                           </map>
                         </option>

@@ -1,15 +1,14 @@
 package com.sa.social.network.viewmodel
 
 import android.app.Application
-import android.graphics.Bitmap
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.sa.social.network.model.*
 
 class ProfileViewModel(application: Application) : AndroidViewModel(application)
 {
-    var repos= DataRepositorie(application.applicationContext)
-    private var getProfilePostLiveData: MutableLiveData<ArrayList<Posts>> = repos.getProfileLiveData()
+    var repos= ProfileDataRepositorie(application.applicationContext)
+    private var getProfilePostLiveData: MutableLiveData<ArrayList<Posts>> = repos.getProfilePostLiveData()
     private var usetDate: MutableLiveData<User> = repos.getUserLiveData()
 
 

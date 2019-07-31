@@ -9,4 +9,7 @@
     <color name="twitterButton">#5ba1f3</color>
 
     <color name="fabBackgourdTine">#fd0285</color>
+
+    <color name="lightPrimary">#B7504DE4</color>
+    <color name="darkPrimary">#B70500EE</color>
 </resources>

@@ -14,6 +14,9 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.sa.social.network.MainActivity
 import com.sa.social.network.R
 import com.sa.social.network.adapter.PostsAdapterProfile
@@ -24,6 +27,11 @@ import com.sa.social.network.viewmodel.LoginViewModel
 import com.sa.social.network.viewmodel.ProfileViewModel
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.fragment_profile.view.*
+
+
+
+
+
 
 
 class ProfileFragment : Fragment(){
@@ -47,8 +55,10 @@ class ProfileFragment : Fragment(){
         var profilePostsData=profileViewModel.getProfileData()
         var profileData=profileViewModel.getProfile()
 
-        view.RecyPhotosPostsProfile.layoutManager = GridLayoutManager(activity,3)
-        view.RecyPhotosPostsProfile.adapter = PostsAdapterProfile(profilePostsData,context!!)
+        view.RecyPhotosPostsProfile.apply {
+            layoutManager=  GridLayoutManager(activity,3)
+            adapter = PostsAdapterProfile(profilePostsData,context!!)
+        }
 
 
         profileViewModel.getProfilePost().observe(this, Observer<ArrayList<Posts>> {
@@ -57,12 +67,24 @@ class ProfileFragment : Fragment(){
         })
 
         profileViewModel.getUsetDate().observe(this, Observer <User>{
-           view.TxtUserNameProfile.text=it.userName
-            view.PrgLoadDataProfile.visibility=View.GONE
+               profileData=it
+               view.TxtUserNameProfile.text=it.userName
+                Glide.with(view.context)
+                .load(it.profilePhotoUrl)
+                .placeholder(com.sa.social.network.R.drawable.ic_avatar_profile)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(view.ImgProfileImgProfile)
+             view.PrgLoadDataProfile.visibility=View.GONE
         })
         view.CrdEditProfile.setOnClickListener {
+            var editProfile=EditProfileFragment.newInstance()
+            val bundle = Bundle()
+            val obj = profileData
+            bundle.putSerializable("user", obj)
+            editProfile.setArguments(bundle);
             val transaction =activity!!.supportFragmentManager.beginTransaction()
-            transaction.replace(R.id.FragMainActivity,EditProfileFragment.newInstance())
+            transaction.replace(R.id.FragMainActivity,editProfile)
             transaction.addToBackStack("ProfileFragment")
             transaction.commit()
         }
