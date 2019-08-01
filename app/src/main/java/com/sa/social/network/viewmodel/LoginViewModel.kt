@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import com.facebook.AccessToken
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.firebase.auth.FirebaseUser
-import com.sa.social.network.model.AuthnticationRepositorie
+import com.sa.social.network.Repositories.AuthnticationRepositorie
 
 class LoginViewModel(application: Application) : AndroidViewModel(application){
     var repos= AuthnticationRepositorie(application.applicationContext)

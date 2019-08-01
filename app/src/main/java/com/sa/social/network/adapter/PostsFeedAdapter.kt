@@ -4,10 +4,6 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextClock
-import android.widget.TextView
-import android.widget.ToggleButton
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -17,14 +13,38 @@ import com.sa.social.network.model.Posts
 import com.sa.social.network.viewmodel.HomeViewModel
 import android.R.attr.author
 import android.os.Bundle
+import android.util.Log
 import com.sa.social.network.fragment.CommentsFragment
 import androidx.appcompat.app.AppCompatActivity
+import android.widget.*
+import androidx.paging.PagedListAdapter
+import androidx.recyclerview.widget.DiffUtil
+import com.sa.social.network.model.Comments
 
 
+class PostsFeedAdapter(var context: Context,homeViewModel : HomeViewModel): PagedListAdapter<Posts, PostsFeedAdapter.ViewHolder>(diffCallback)
+{
+    lateinit var homeViewModel : HomeViewModel
+
+    init {
+        this.homeViewModel = homeViewModel
+    }
+    companion object {
+
+        private val diffCallback = object : DiffUtil.ItemCallback<Posts>() {
+            override fun areItemsTheSame(oldItem: Posts, newItem: Posts): Boolean {
+                return  oldItem.postId == newItem.postId
+            }
 
 
+            override fun areContentsTheSame(oldItem: Posts, newItem: Posts): Boolean {
+                return oldItem == newItem
+            }
 
-class PostsFeedAdapter(val data: ArrayList<Posts>, val context: Context,var homeViewModel: HomeViewModel): RecyclerView.Adapter<PostsFeedAdapter.ViewHolder>(){
+        }
+    }
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostsFeedAdapter.ViewHolder {
         val itemView = LayoutInflater
             .from(parent.context)
@@ -32,13 +52,11 @@ class PostsFeedAdapter(val data: ArrayList<Posts>, val context: Context,var home
         return ViewHolder(itemView)
     }
 
-    override fun getItemCount(): Int {
-        return data.size
-    }
 
     override fun onBindViewHolder(holder: PostsFeedAdapter.ViewHolder, position: Int) {
-        val post = data[position]
-        holder.bind(post)
+        val post = getItem(position)
+        holder.bind(post!!)
+
     }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -62,18 +80,18 @@ class PostsFeedAdapter(val data: ArrayList<Posts>, val context: Context,var home
 
             likeToggle.setOnClickListener {
                 if (likeToggle.isChecked) {
-                    data.get(adapterPosition).isLikedPost=true
-                    data.get(adapterPosition).likes= data.get(adapterPosition).likes+1
-                    numberOfLikes.text= data.get(adapterPosition).likes.toString()
-                    homeViewModel.updatePost(data.get(adapterPosition),true)
+                    getItem(adapterPosition)!!.isLikedPost=true
+                    getItem(adapterPosition)!!.likes=  getItem(adapterPosition)!!.likes+1
+                    numberOfLikes.text=  getItem(adapterPosition)!!.likes.toString()
+                    homeViewModel.updatePostLikes( getItem(adapterPosition)!!.postId,true)
 
                 }
                 else
                 {
-                    data.get(adapterPosition).isLikedPost=false
-                    data.get(adapterPosition).likes= data.get(adapterPosition).likes-1
-                    numberOfLikes.text= data.get(adapterPosition).likes.toString()
-                    homeViewModel.updatePost(data.get(adapterPosition),false)
+                    getItem(adapterPosition)!!.isLikedPost=false
+                    getItem(adapterPosition)!!.likes= getItem(adapterPosition)!!.likes-1
+                    numberOfLikes.text=  getItem(adapterPosition)!!.likes.toString()
+                    homeViewModel.updatePostLikes( getItem(adapterPosition)!!.postId,false)
                 }
                 notifyDataSetChanged()
             }
@@ -115,4 +133,7 @@ class PostsFeedAdapter(val data: ArrayList<Posts>, val context: Context,var home
         }
     }
 
+
+
 }
+

@@ -1,12 +1,10 @@
 package com.sa.social.network.viewmodel
 
 import android.app.Application
-import android.graphics.Bitmap
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.sa.social.network.model.Comments
-import com.sa.social.network.model.FeedDataRepositore
-import com.sa.social.network.model.User
+import com.sa.social.network.Repositories.FeedDataRepositore
 
 
 class CommentsViewModel(application : Application) : AndroidViewModel(application)

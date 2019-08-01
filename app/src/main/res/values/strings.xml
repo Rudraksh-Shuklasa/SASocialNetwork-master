@@ -21,4 +21,8 @@
     <string name="facebook_app_id">663848910788077</string>
     <string name="fb_login_protocol_scheme">fb663848910788077</string>
     <string name="discripition_post_dialog">Write Your Description</string>
+
+
+    <string name="loading_text">Loading ...</string>
+    <string name="search_hint">Search Description</string>
 </resources>

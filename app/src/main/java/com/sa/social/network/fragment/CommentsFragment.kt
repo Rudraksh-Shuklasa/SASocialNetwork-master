@@ -14,7 +14,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.paging.PagedList
+
 import com.sa.social.network.R
 import com.sa.social.network.databinding.FragmentCommentsPostBinding
 import com.sa.social.network.databinding.FragmentEditProfileBinding
@@ -25,7 +25,7 @@ import kotlinx.android.synthetic.main.fragment_comments_post.view.*
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.firebase.ui.firestore.paging.FirestorePagingOptions
+
 import com.sa.social.network.adapter.PostCommentAdapter
 import com.sa.social.network.adapter.PostsFeedAdapter
 import com.sa.social.network.model.Comments
@@ -38,8 +38,11 @@ class CommentsFragment : Fragment()
     lateinit var commentsViewHolder : CommentsViewModel
     var TAG = this.javaClass.simpleName
     companion object {
+        private var commentFragment: CommentsFragment? = null
         fun newInstance(): CommentsFragment {
-            return CommentsFragment()
+            if(commentFragment == null)
+                commentFragment = CommentsFragment()
+             return CommentsFragment()
         }
     }
 

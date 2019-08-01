@@ -4,8 +4,7 @@ import android.app.Application
 import android.graphics.Bitmap
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.sa.social.network.model.Comments
-import com.sa.social.network.model.ProfileDataRepositorie
+import com.sa.social.network.Repositories.ProfileDataRepositorie
 import com.sa.social.network.model.User
 
 class EditProfileViewModel(application : Application) : AndroidViewModel(application)

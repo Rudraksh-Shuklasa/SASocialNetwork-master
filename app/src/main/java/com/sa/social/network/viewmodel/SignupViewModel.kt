@@ -5,12 +5,12 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseUser
-import com.sa.social.network.model.AuthnticationRepositorie
+import com.sa.social.network.Repositories.AuthnticationRepositorie
 
 
 class SignupViewModel(application: Application) : AndroidViewModel(application)
 {
-    var repos=AuthnticationRepositorie(application.applicationContext)
+    var repos= AuthnticationRepositorie(application.applicationContext)
     private var getCurrentUserLiveData: MutableLiveData<Boolean> = repos.getcurrentUserLiveData()
 
 
