@@ -5,7 +5,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseUser
-import com.sa.social.network.Repositories.AuthnticationRepositorie
+import com.sa.social.network.repositories.AuthnticationRepositorie
 
 
 class SignupViewModel(application: Application) : AndroidViewModel(application)

@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.sa.social.network.model.Comments
-import com.sa.social.network.Repositories.FeedDataRepositore
+import com.sa.social.network.repositories.FeedDataRepositore
 
 
 class CommentsViewModel(application : Application) : AndroidViewModel(application)

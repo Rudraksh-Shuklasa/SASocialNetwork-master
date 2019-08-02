@@ -1,7 +1,6 @@
 package com.sa.social.network.adapter
 
 import android.view.View
-import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import android.content.Context
 import android.view.LayoutInflater
@@ -9,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.sa.social.network.R
 import com.sa.social.network.model.Comments
-import com.sa.social.network.model.Posts
 
 
 class PostCommentAdapter(val data: ArrayList<Comments>, val context: Context): RecyclerView.Adapter<PostCommentAdapter.ViewHolder>() {
@@ -31,7 +29,7 @@ class PostCommentAdapter(val data: ArrayList<Comments>, val context: Context): R
     }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private var userName: TextView = view.findViewById(R.id.TxtUserNameCommentOwnerCommentItme)
+        private var userName: TextView = view.findViewById(R.id.TxtNotificationTitle)
         private var commentText : TextView = view.findViewById(R.id.TxtCommentTextCommentItme)
 
         fun bind(comment: Comments) {

@@ -1,4 +1,4 @@
-package com.sa.social.network.Repositories
+package com.sa.social.network.repositories
 
 import android.content.Context
 import android.graphics.Bitmap

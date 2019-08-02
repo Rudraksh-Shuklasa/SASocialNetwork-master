@@ -3,15 +3,20 @@ package com.sa.social.network
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.text.Html
 import android.text.SpannableString
+import android.view.View
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.sa.social.network.base.BaseActivity
 import com.sa.social.network.viewmodel.SignupViewModel
 import kotlinx.android.synthetic.main.activity_signup.*
 
-class SignupActivity : AppCompatActivity() {
+class SignupActivity : BaseActivity() {
+    var doubleBackToExitPressedOnce = false
     lateinit var signupViewModel : SignupViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +39,7 @@ class SignupActivity : AppCompatActivity() {
         signupViewModel.getCurrentUser().observe(this, Observer<Boolean> {
             if(it)
             {
+                PrgSignupProcess.visibility= View.GONE
                 var intent=Intent(this,MainActivity::class.java)
                 startActivity(intent)
                 finish()
@@ -43,6 +49,7 @@ class SignupActivity : AppCompatActivity() {
 
         BtnSignup.setOnClickListener {
             signupViewModel.signinUser(EdtEmailSignUp.text.toString(),EdtPasswordSignup.text.toString(),this)
+            PrgSignupProcess.visibility= View.VISIBLE
         }
 
     }
@@ -56,6 +63,20 @@ class SignupActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+
+    }
+
+    override fun onBackPressed() {
+
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed()
+            return
+        }
+
+        this.doubleBackToExitPressedOnce = true
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show()
+
+        Handler().postDelayed(Runnable { doubleBackToExitPressedOnce = false }, 2000)
 
     }
 }

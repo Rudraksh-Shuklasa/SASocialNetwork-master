@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.request.RequestOptions
 import com.sa.social.network.MainActivity
 import com.sa.social.network.R
 import com.sa.social.network.adapter.PostsAdapterProfile
@@ -61,6 +62,7 @@ class ProfileFragment : Fragment(){
         }
 
 
+
         profileViewModel.getProfilePost().observe(this, Observer<ArrayList<Posts>> {
             (view.RecyPhotosPostsProfile.adapter as PostsAdapterProfile).notifyDataSetChanged()
             view.PrgLoadDataProfile.visibility=View.GONE
@@ -69,12 +71,15 @@ class ProfileFragment : Fragment(){
         profileViewModel.getUsetDate().observe(this, Observer <User>{
                profileData=it
                view.TxtUserNameProfile.text=it.userName
-                Glide.with(view.context)
-                .load(it.profilePhotoUrl)
-                .placeholder(com.sa.social.network.R.drawable.ic_avatar_profile)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .transition(DrawableTransitionOptions.withCrossFade())
+                 val requestOptions = RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL)
+                 Glide.with(view.context)
+                .load(profileData.profilePhotoUrl)
+                     .apply(requestOptions)
+                     .placeholder(com.sa.social.network.R.drawable.ic_avatar_profile)
                 .into(view.ImgProfileImgProfile)
+
+
+
              view.PrgLoadDataProfile.visibility=View.GONE
         })
         view.CrdEditProfile.setOnClickListener {

@@ -40,7 +40,7 @@
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="18dp"
-            android:text="cxcxz asdsad "
+            android:text=""
             android:id="@+id/TxtUserNameProfile"
             android:layout_marginTop="@dimen/_8sdp"
             android:textColor="@android:color/black"
@@ -66,7 +66,7 @@
                   app:layout_constraintStart_toStartOf="@+id/guideline3"
                   android:layout_marginTop="@dimen/_8sdp"
                   app:layout_constraintBottom_toTopOf="@+id/guideline2"
-                  app:layout_constraintTop_toTopOf="parent" android:id="@+id/linearLayout">
+                  app:layout_constraintTop_toTopOf="parent" android:id="@+id/linearLayout" android:baselineAligned="false">
 
         <LinearLayout android:layout_width="0pt"
                       android:layout_height="match_parent"
@@ -81,13 +81,13 @@
                     android:textColor="@android:color/black"
                     android:textStyle="bold"
                     android:gravity="center"
-                    android:text="96"
+                    android:text="@string/profile_dummy_count"
                     android:textSize="@dimen/_16sdp"/>
             <TextView android:layout_width="match_parent"
                       android:layout_height="wrap_content"
                       android:textColor="@android:color/black"
                       android:gravity="center"
-                      android:text="Posts"
+                      android:text="@string/profile_post_count"
                       android:textSize="@dimen/_12sdp"/>
 
         </LinearLayout>
@@ -104,13 +104,13 @@
                     android:textColor="@android:color/black"
                     android:gravity="center"
                     android:textStyle="bold"
-                    android:text="96"
+                    android:text="@string/profile_dummy_count"
                     android:textSize="@dimen/_16sdp"/>
             <TextView android:layout_width="match_parent"
                       android:layout_height="wrap_content"
                       android:textColor="@android:color/black"
                       android:gravity="center"
-                      android:text="Followers"
+                      android:text="@string/profile_followers_count"
                       android:textSize="@dimen/_12sdp"/>
 
         </LinearLayout>
@@ -127,13 +127,13 @@
                     android:textColor="@android:color/black"
                     android:gravity="center"
                     android:textStyle="bold"
-                    android:text="96"
+                    android:text="@string/profile_dummy_count"
                     android:textSize="@dimen/_16sdp"/>
             <TextView android:layout_width="match_parent"
                       android:layout_height="wrap_content"
                       android:textColor="@android:color/black"
                       android:gravity="center"
-                      android:text="Following"
+                      android:text="@string/profile_following_count"
                       android:textSize="@dimen/_12sdp"/>
 
         </LinearLayout>
@@ -156,7 +156,7 @@
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Update Profile"
+                android:text="@string/profile_update_profile"
                 android:textStyle="bold"
                 android:padding="@dimen/_6sdp"
                 android:layout_gravity="center"/>

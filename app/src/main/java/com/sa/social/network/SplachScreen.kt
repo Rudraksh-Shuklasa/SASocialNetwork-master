@@ -13,10 +13,10 @@ import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 import android.provider.SyncStateContract.Helpers.update
 import android.content.pm.PackageInfo
+import com.sa.social.network.base.BaseActivity
 
 
-
-class SplachScreen : AppCompatActivity() {
+class SplachScreen : BaseActivity() {
 
     private var delayHandler : Handler?= null
     private val delay : Long = 5000
@@ -64,6 +64,8 @@ class SplachScreen : AppCompatActivity() {
 
         super.onDestroy()
     }
+
+
 
 
 

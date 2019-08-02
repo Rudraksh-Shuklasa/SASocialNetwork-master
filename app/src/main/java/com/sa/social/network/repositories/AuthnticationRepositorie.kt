@@ -1,4 +1,4 @@
-package com.sa.social.network.Repositories
+package com.sa.social.network.repositories
 
 import android.app.Activity
 import android.content.Context

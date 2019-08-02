@@ -13,6 +13,12 @@
             android:icon="@drawable/ic_check_mark_edit_profile_menu"
             app:showAsAction="always"
     />
+    <item
+            android:id="@+id/btn_logout_menu"
+            android:title="Save"
+            android:icon="@drawable/ic_logout"
+            app:showAsAction="always"
+    />
 
 
 </menu>

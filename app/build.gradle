@@ -44,11 +44,8 @@ dependencies {
     implementation 'com.google.android.material:material:1.0.0-rc01'
     implementation 'androidx.core:core-ktx:1.2.0-alpha02'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
-    testImplementation 'junit:junit:4.12'
 
-    androidTestImplementation 'androidx.test:runner:1.1.0-alpha4'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
-
+    //Load image from url
     implementation 'com.github.bumptech.glide:glide:4.9.0'
 
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
@@ -61,12 +58,12 @@ dependencies {
     //For matiral design
     implementation 'com.google.android.material:material:1.0.0-alpha3'
 
+    //firebase Depandncy
     implementation 'com.google.firebase:firebase-auth:18.1.0'
 
     implementation 'com.google.firebase:firebase-storage:18.1.1'
 
-
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
+    implementation 'com.google.firebase:firebase-messaging:19.0.1'
 
     implementation 'com.google.android.gms:play-services-auth:15.0.1'
 
@@ -74,17 +71,38 @@ dependencies {
 
     implementation 'com.facebook.android:facebook-android-sdk:4.31.0'
 
-    implementation 'de.hdodenhof:circleimageview:3.0.0'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
 
     implementation 'com.google.firebase:firebase-firestore:20.2.0'
+
+    implementation 'com.google.firebase:firebase-core:16.0.3'
+
+
+
+
+
+
+    // Circuler Image View
+    implementation 'de.hdodenhof:circleimageview:3.0.0'
+
+
+    //Corunten
 
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.1"
 
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.1.1"
 
+
+    //Pagination
     implementation "androidx.paging:paging-runtime:2.1.0"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:0.20"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:0.20"
+
+    testImplementation 'junit:junit:4.12'
+
+    androidTestImplementation 'androidx.test:runner:1.1.0-alpha4'
+
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
+
+
 
 
 

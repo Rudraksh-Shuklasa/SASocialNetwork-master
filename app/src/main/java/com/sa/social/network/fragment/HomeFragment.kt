@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.sa.social.network.R
 import android.app.Activity.RESULT_OK
+import android.content.Context
 import com.google.android.material.snackbar.Snackbar
 import androidx.core.app.ActivityCompat
 import android.content.pm.PackageManager
@@ -12,6 +13,7 @@ import androidx.core.content.ContextCompat
 import android.content.Intent
 import android.graphics.Bitmap
 import android.provider.MediaStore
+import android.util.Log
 import android.view.*
 
 import android.widget.Toast
@@ -30,7 +32,7 @@ import kotlinx.android.synthetic.main.fragment_home.view.*
 import java.io.IOException
 
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(),SearchView.OnQueryTextListener {
 
 
     val requestIdForPermissions = 1
@@ -49,6 +51,7 @@ class HomeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         homeViewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
     }
 
@@ -57,12 +60,9 @@ class HomeFragment : Fragment() {
 
 
 
-        view.SerachToolBar.inflateMenu(R.menu.menu_search_home_toolbar)
-        view.SerachToolBar.title="Feeds"
+        initView(view)
 
-        var item = (view.SerachToolBar.menu).findItem(R.id.action_search);
-        var searchView =  MenuItemCompat.getActionView(item) as SearchView
-        val mAdapter = PostsFeedAdapter(context!!,homeViewModel)
+        mAdapter = PostsFeedAdapter(context!!,homeViewModel)
 
         view.RcyPostFeedHome.apply {
             layoutManager = GridLayoutManager(context,1)
@@ -70,8 +70,8 @@ class HomeFragment : Fragment() {
         }
 
         homeViewModel.postPagedList.observe(this , Observer {
-
             mAdapter.submitList(it)
+
         })
 
         homeViewModel.getImageUploadLiveData().observe(this, Observer<Boolean> {
@@ -93,7 +93,7 @@ class HomeFragment : Fragment() {
 
         view.SwpLytFeedHome.setOnRefreshListener(object : SwipeRefreshLayout.OnRefreshListener {
             override fun onRefresh() {
-                 homeViewModel.swipeRefresh()
+                 homeViewModel.RefreshPosts()
                 view.SwpLytFeedHome.isRefreshing = false
             }
         })
@@ -163,6 +163,26 @@ class HomeFragment : Fragment() {
         }
 
         return view
+    }
+
+    private fun initView(view: View?) {
+        view!!.SerachToolBar.inflateMenu(R.menu.menu_search_home_toolbar)
+        view!!.SerachToolBar.title="Feeds"
+        view!!.SerachToolBar.setTitleTextColor(resources.getColor(R.color.colorPrimaryDark))
+
+        activity!!.window.statusBarColor = ContextCompat.getColor(activity!!, R.color.colorPrimary)
+        var item = (view.SerachToolBar.menu).findItem(R.id.action_search);
+        var searchView =  MenuItemCompat.getActionView(item) as SearchView
+
+        searchView.setOnQueryTextListener(this)
+        searchView.setOnCloseListener(object : SearchView.OnCloseListener{
+            override fun onClose(): Boolean {
+                homeViewModel.RefreshPosts()
+                return true
+            }
+
+        })
+
     }
 
 
@@ -248,23 +268,27 @@ class HomeFragment : Fragment() {
         }
     }
 
-     private fun findSimmilarPost(searchView : SearchView) {
 
-        searchView.setOnQueryTextListener(object :SearchView.OnQueryTextListener {
-
-            public override fun onQueryTextSubmit(query: String): Boolean {
-
-                return true;
-            }
-
-
-            public override fun onQueryTextChange(newText:String) : Boolean {
-
-
-                return true;
-            }
-        });
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        homeViewModel.RefreshPosts()
+        homeViewModel.searchPostByDesctiption(query!!)
+        homeViewModel.filterdPostPagedList.observe(this , Observer {
+            mAdapter.submitList(it)
+            Log.d(TAG,"Enter Listnr")
+        })
+        return true
     }
+
+    override fun onQueryTextChange(newText: String?): Boolean {
+        homeViewModel.RefreshPosts()
+        homeViewModel.searchPostByDesctiption(newText!!)
+        homeViewModel.filterdPostPagedList.observe(this , Observer {
+            mAdapter.submitList(it)
+            Log.d(TAG,"Enter Listnr")
+        })
+        return true
+    }
+
 
 
 

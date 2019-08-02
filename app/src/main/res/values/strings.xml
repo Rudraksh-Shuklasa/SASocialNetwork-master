@@ -25,4 +25,14 @@
 
     <string name="loading_text">Loading ...</string>
     <string name="search_hint">Search Description</string>
+
+    <string name="firebase_notification_id">fcm_channel</string>
+
+    <string name="profile_dummy_count">96</string>
+    <string name="profile_post_count">Posts</string>
+    <string name="profile_followers_count">Followers</string>
+    <string name="profile_following_count">Following</string>
+    <string name="profile_update_profile">Update Profile</string>
+    <string name="edit_profile_change_profile_picture">Change The Profile Picture</string>
+    <string name="edit_profile_username">User Name</string>
 </resources>

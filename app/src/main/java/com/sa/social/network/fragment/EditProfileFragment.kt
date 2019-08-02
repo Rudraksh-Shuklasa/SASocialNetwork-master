@@ -3,10 +3,12 @@ package com.sa.social.network.fragment
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.*
 import android.widget.ImageView
 import android.widget.Toast
@@ -22,15 +24,18 @@ import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
+import com.sa.social.network.LoginActivity
 import com.sa.social.network.R
 import com.sa.social.network.databinding.FragmentEditProfileBinding
 import com.sa.social.network.model.User
+import com.sa.social.network.utils.SharedPrefrenceUtils
 import com.sa.social.network.viewmodel.EditProfileViewModel
 import kotlinx.android.synthetic.main.dialog_post.view.*
 import kotlinx.android.synthetic.main.fragment_edit_profile.*
 import kotlinx.android.synthetic.main.fragment_edit_profile.view.*
-import kotlinx.android.synthetic.main.fragment_profile.view.*
 import java.io.IOException
 
 
@@ -68,12 +73,12 @@ class EditProfileFragment : Fragment(){
 
         editProfileViewModel.getUsetDate().observe(this, Observer <User>{
             user=it
+            val requestOptions = RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL)
             Glide.with(view.context)
-                .load(it.profilePhotoUrl)
-                .placeholder(R.drawable.ic_avatar_profile)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .into(profilePhoto)
+                .load(user.profilePhotoUrl)
+                .apply(requestOptions)
+                .placeholder(com.sa.social.network.R.drawable.ic_avatar_profile)
+                .into(view.ImgProfileImgProfile)
             binding.model=it
         })
 
@@ -144,6 +149,16 @@ class EditProfileFragment : Fragment(){
                 {
                     activity?.getSupportFragmentManager()?.popBackStack()
                 }
+
+                R.id.btn_logout_menu ->
+                {
+                    FirebaseAuth.getInstance().signOut()
+
+                    SharedPrefrenceUtils.removeSharedPrefrence(activity!!.applicationContext)
+                    var goToLogin=Intent(activity,LoginActivity::class.java)
+                    startActivity(goToLogin)
+                    activity!!.finish()
+                }
             }
             return@OnMenuItemClickListener true
 
@@ -206,6 +221,11 @@ class EditProfileFragment : Fragment(){
                 }
             }
         }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+
     }
 
 

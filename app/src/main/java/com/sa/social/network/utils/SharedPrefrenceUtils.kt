@@ -22,6 +22,11 @@ public class SharedPrefrenceUtils{
                  mSharedPref=context.getSharedPreferences(context.packageName,Activity.MODE_PRIVATE)
              return mSharedPref
          }
+        fun removeSharedPrefrence(context: Context)
+        {
+            if(mSharedPref != null)
+                mSharedPref!!.edit().clear().commit();
+        }
 
         fun deleteSharedPrefrence(context: Context)
         {

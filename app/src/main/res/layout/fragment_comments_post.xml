@@ -46,12 +46,12 @@
 
     <View android:layout_width="match_parent"
           android:layout_height="@dimen/_1sdp"
-          android:background="@color/colorAccent"
+          android:background="@color/colorPrimary"
           app:layout_constraintBottom_toTopOf="@+id/LytAddCommentC"/>
     <LinearLayout
             android:id="@+id/LytAddCommentC"
             android:layout_width="fill_parent"
-            android:layout_height="@dimen/_32sdp"
+            android:layout_height="@dimen/_38sdp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"

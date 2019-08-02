@@ -3,6 +3,7 @@ package com.sa.social.network
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.text.Html
 import android.text.method.LinkMovementMethod
 import kotlinx.android.synthetic.main.activity_login.*
@@ -32,12 +33,14 @@ import com.facebook.internal.WebDialog
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseUser
+import com.sa.social.network.base.BaseActivity
 
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : BaseActivity() {
     lateinit var loginViewModel : LoginViewModel
     var TAG = this.javaClass.simpleName
     private val RC_SIGN_IN = 1
+    var doubleBackToExitPressedOnce = false
     lateinit var mGoogleSignInClient: GoogleSignInClient
     private var mCallbackManager: CallbackManager? = null
 
@@ -57,6 +60,7 @@ class LoginActivity : AppCompatActivity() {
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
+
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         loginViewModel=  ViewModelProviders.of(this).get(LoginViewModel::class.java);
 
@@ -95,6 +99,7 @@ class LoginActivity : AppCompatActivity() {
         loginViewModel.getCurrentUser().observe(this, Observer<Boolean> {
             if(it)
             {
+                PrgLoginProcess.visibility=View.GONE
                 var intent=Intent(this,MainActivity::class.java)
                 startActivity(intent)
                 finish()
@@ -103,6 +108,7 @@ class LoginActivity : AppCompatActivity() {
 
         BtnLogin.setOnClickListener {
             loginViewModel.loginUser(EdtEmailLogin.text.toString(),EdtPasswordLogin.text.toString(),this)
+            PrgLoginProcess.visibility=View.VISIBLE
         }
 
         txtSignup.setOnClickListener {
@@ -111,7 +117,7 @@ class LoginActivity : AppCompatActivity() {
             finish()
 
         }
-        textView.setMovementMethod(LinkMovementMethod.getInstance());
+
     }
 
 
@@ -131,7 +137,7 @@ class LoginActivity : AppCompatActivity() {
             try {
 
                 val account = task.getResult(ApiException::class.java)
-
+                PrgLoginProcess.visibility=View.VISIBLE
                 loginViewModel.firebaseAuthWithGoogle(account!!,this)
             } catch (e: ApiException) {
                 Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
@@ -141,13 +147,20 @@ class LoginActivity : AppCompatActivity() {
     }
     override fun onStart() {
         super.onStart()
-        var user=loginViewModel.checkUSerStatus()
-        if(user!=null)
-        {
-            var intent=Intent(this,MainActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
+
+    }
+
+    override fun onBackPressed() {
+
+            if (doubleBackToExitPressedOnce) {
+                super.onBackPressed()
+                return
+            }
+
+            this.doubleBackToExitPressedOnce = true
+            Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show()
+
+            Handler().postDelayed(Runnable { doubleBackToExitPressedOnce = false }, 2000)
 
     }
 

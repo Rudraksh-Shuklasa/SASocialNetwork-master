@@ -1,4 +1,4 @@
-package com.sa.social.network.Repositories
+package com.sa.social.network.datasource
 
 import android.content.Context
 import android.util.Log
@@ -136,7 +136,6 @@ class PostDataSource(context : Context) : PageKeyedDataSource<Query, Posts>()
                         .orderBy("timestamp")
                         .startAfter(lastPost)
                         .limit(5)
-
 
                     callback.onResult(postList ,nextSearchFor)
                 }

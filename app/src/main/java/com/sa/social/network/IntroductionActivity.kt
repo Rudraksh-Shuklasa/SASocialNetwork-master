@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.ScaleGestureDetector
 import android.view.Window
@@ -14,12 +15,14 @@ import com.sa.social.network.adapter.SliderAdapterIntroducation
 import kotlinx.android.synthetic.main.activity_introduction.*
 import android.widget.TextView
 import android.widget.LinearLayout
+import android.widget.Toast
 import com.google.android.gms.common.util.SharedPreferencesUtils
+import com.sa.social.network.base.BaseActivity
 import com.sa.social.network.utils.SharedPrefrenceUtils
 
 
-class IntroductionActivity : AppCompatActivity() {
-
+class IntroductionActivity : BaseActivity(){
+    var doubleBackToExitPressedOnce = false
     private var TAG=this.javaClass.simpleName
     private var photoList=ArrayList<Int>()
     private var lastPagePostion : Int=0
@@ -108,6 +111,20 @@ class IntroductionActivity : AppCompatActivity() {
         dots[lastPagePostion].setImageResource(R.drawable.ic_intro_non_selected_tab)
         dots[posiotion].setImageResource(R.drawable.ic_intro_selected_tab)
         lastPagePostion=posiotion
+
+    }
+
+    override fun onBackPressed() {
+
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed()
+            return
+        }
+
+        this.doubleBackToExitPressedOnce = true
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show()
+
+        Handler().postDelayed(Runnable { doubleBackToExitPressedOnce = false }, 2000)
 
     }
 }

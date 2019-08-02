@@ -8,72 +8,72 @@
                 name="viewModelDetail"
                 type="com.sa.social.network.viewmodel.EditProfileViewModel" />
     </data>
-<androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-
-    <androidx.appcompat.widget.Toolbar
-            android:id="@+id/ToolEditProfile"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@android:color/white"
-            android:layout_alignParentStart="true"
-            android:background="@color/colorPrimary"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
-
-    <de.hdodenhof.circleimageview.CircleImageView
+    <androidx.constraintlayout.widget.ConstraintLayout
             xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/ImgProfileImgProfile"
-            android:layout_width="@dimen/_164sdp"
-            android:layout_height="@dimen/_164sdp"
-            app:civ_border_width="@dimen/_1sdp"
-            app:civ_border_color="@color/colorPrimary"
-            android:layout_marginTop="@dimen/_32sdp"
-            app:layout_constraintTop_toBottomOf="@+id/ToolEditProfile"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="@dimen/_8sdp"/>
-
-    <TextView
-            android:id="@+id/TxtChangeProfilePhotoEditProfile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Change The Profile Picture"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="@dimen/_18sdp"
-            android:textStyle="bold"
-            android:textColor="@color/colorPrimary"
-
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ImgProfileImgProfile"
-    />
-
-    <TextView android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:text="User Name"
-              android:layout_marginTop="@dimen/_16sdp"
-              android:textSize="@dimen/_12sdp"
-              app:layout_constraintTop_toBottomOf="@+id/TxtChangeProfilePhotoEditProfile"
-              app:layout_constraintStart_toStartOf="parent"
-              android:layout_marginStart="@dimen/_6sdp"
-              android:id="@+id/textView3"/>
-
-    <EditText
-            android:id="@+id/EdtUpdateUserNameEditProfile"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              app:layout_constraintTop_toBottomOf="@+id/textView3"
-              app:layout_constraintStart_toStartOf="parent"
-              android:text="@{model.userName}"
-              android:layout_marginStart="@dimen/_6sdp"
-    />
+            android:layout_height="match_parent">
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.appcompat.widget.Toolbar
+                android:id="@+id/ToolEditProfile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/white"
+                android:layout_alignParentStart="true"
+                android:background="@color/colorPrimary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/ImgProfileImgProfile"
+                android:layout_width="@dimen/_164sdp"
+                android:layout_height="@dimen/_164sdp"
+                app:civ_border_width="@dimen/_1sdp"
+                app:civ_border_color="@color/colorPrimary"
+                android:layout_marginTop="@dimen/_32sdp"
+                app:layout_constraintTop_toBottomOf="@+id/ToolEditProfile"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="@dimen/_8sdp"/>
+
+        <TextView
+                android:id="@+id/TxtChangeProfilePhotoEditProfile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Change The Profile Picture"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="@dimen/_18sdp"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ImgProfileImgProfile"
+        />
+
+        <TextView android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="User Name"
+                  android:layout_marginTop="@dimen/_16sdp"
+                  android:textSize="@dimen/_12sdp"
+                  app:layout_constraintTop_toBottomOf="@+id/TxtChangeProfilePhotoEditProfile"
+                  app:layout_constraintStart_toStartOf="parent"
+                  android:layout_marginStart="@dimen/_6sdp"
+                  android:id="@+id/textView3"/>
+
+        <EditText
+                android:id="@+id/EdtUpdateUserNameEditProfile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/textView3"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="@{model.userName}"
+                android:layout_marginStart="@dimen/_6sdp"
+        />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -1,4 +1,4 @@
-package com.sa.social.network.Repositories
+package com.sa.social.network.datasource
 
 import android.content.Context
 import androidx.lifecycle.MutableLiveData

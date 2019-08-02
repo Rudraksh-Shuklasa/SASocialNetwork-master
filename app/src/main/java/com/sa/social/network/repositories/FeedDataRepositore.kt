@@ -1,4 +1,4 @@
-package com.sa.social.network.Repositories
+package com.sa.social.network.repositories
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -284,37 +284,7 @@ class FeedDataRepositore(context : Context) {
     }
 
 
-    //search Post
-    fun searchPostByDesctiption(desription : String)
-    {
-        val questionsRef = fireDbInstance.collection("Posts")
-        questionsRef.whereEqualTo("descripition",desription).get().addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                if(task.result!!.size() <1)
-                {
-                    isImagesloaded.postValue(true)
-                }
-                for (document in task.result!!) {
 
-
-                    var post= Posts(
-                        document["postId"].toString(),
-                        document["userId"].toString(),
-                        document["photosUrl"].toString(),
-                        document["timestamp"] as Long,
-                        document["descripition"].toString(),
-                        document["likes"] as Long,
-                        document["userName"].toString(),
-                        document["comments"] as Long,
-                        false
-                    )
-
-                    //fetchPosts(post)
-                }
-
-            }
-        }
-    }
 
 
 }

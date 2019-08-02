@@ -6,9 +6,9 @@
             android:icon="@drawable/ic_home_mainactivity"
     />
     <item
-            android:id="@+id/bottom_navigation_menu_search"
+            android:id="@+id/bottom_navigation_menu_notification"
             android:title="Search"
-            android:icon="@drawable/ic_search_mainactivity"
+            android:icon="@drawable/ic_notification_mainactivity"
     />
     <item
             android:id="@+id/bottom_navigation_menu_chat"

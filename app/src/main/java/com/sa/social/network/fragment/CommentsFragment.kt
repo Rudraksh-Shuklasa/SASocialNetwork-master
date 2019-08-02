@@ -59,7 +59,6 @@ class CommentsFragment : Fragment()
         )
         val view = binding.getRoot()
         binding.setLifecycleOwner(this)
-        initRecyclerView(view)
         val postId = arguments!!.getString("postId")
         var comments =commentsViewHolder.getComments(postId!!)
 
@@ -127,9 +126,14 @@ class CommentsFragment : Fragment()
         return view
     }
 
-    private fun initRecyclerView(view: View) {
-
+    override fun onDestroyView() {
+        super.onDestroyView()
+        val transaction =activity!!.supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.FragMainActivity,HomeFragment.newInstance())
+        transaction.commit()
     }
+
+
 
 
 

@@ -9,9 +9,10 @@ import androidx.paging.LivePagedListBuilder
 import androidx.paging.PageKeyedDataSource
 import androidx.paging.PagedList
 import com.google.firebase.firestore.Query
-import com.sa.social.network.Repositories.FeedDataRepositore
-import com.sa.social.network.Repositories.PostDataSource
-import com.sa.social.network.Repositories.PostsDataSourceFactory
+import com.sa.social.network.datasource.FilterDataSourceFactory
+import com.sa.social.network.datasource.PostDataSource
+import com.sa.social.network.datasource.PostsDataSourceFactory
+import com.sa.social.network.repositories.*
 import com.sa.social.network.model.*
 
 class HomeViewModel(application: Application) : AndroidViewModel(application)
@@ -21,36 +22,37 @@ class HomeViewModel(application: Application) : AndroidViewModel(application)
     private var recordsList = mutableListOf<Comments>()
     private var isImagesloaded= MutableLiveData<Boolean>()
 
-
     var isFeedIsLoding : MutableLiveData<Boolean>
     var postPagedList: LiveData<PagedList<Posts>>
     var postLiveDataSource: LiveData<PageKeyedDataSource<Query, Posts>>
     var postDataSourceFactory: PostsDataSourceFactory
+    var filterdPostPagedList: LiveData<PagedList<Posts>>
+    private var applicationContext =application.applicationContext
+    lateinit var filterPostDataSource  : FilterDataSourceFactory
 
 
     init {
-        postDataSourceFactory =
-                PostsDataSourceFactory(application.applicationContext)
-        postLiveDataSource = postDataSourceFactory.getPostLiveDataSource()
+        postDataSourceFactory = PostsDataSourceFactory(application.applicationContext)
+        filterPostDataSource  =
+                FilterDataSourceFactory(applicationContext.applicationContext)
 
+        postLiveDataSource = postDataSourceFactory.getPostLiveDataSource()
         val config = PagedList.Config.Builder()
             .setPageSize(5)
             .setEnablePlaceholders(true)
             .build()
 
         postPagedList = LivePagedListBuilder(postDataSourceFactory, config).build()
-        isImagesloaded.postValue(true)
+        filterdPostPagedList=LivePagedListBuilder(filterPostDataSource, config).build()
         isFeedIsLoding= PostDataSource.getIsFeedLoding()
+
 
     }
 
-    fun swipeRefresh() {
+    fun RefreshPosts() {
         postDataSourceFactory.getPostLiveDataSource().getValue()?.invalidate();
     }
 
-
-    private val _records = MutableLiveData<List<Comments>>()
-    val records: LiveData<List<Comments>> = _records
 
     fun uploadImage(image: Bitmap,comment : String){
         repos.uploadImage(image,comment)
@@ -71,7 +73,14 @@ class HomeViewModel(application: Application) : AndroidViewModel(application)
     }
 
     fun searchPostByDesctiption(description: String){
-        repos.searchPostByDesctiption(description)
+        filterPostDataSource.setSearchValue(description)
+        postLiveDataSource = filterPostDataSource.getPostLiveDataSource()
+        val config = PagedList.Config.Builder()
+            .setPageSize(5)
+            .setEnablePlaceholders(true)
+            .build()
+
+        filterdPostPagedList = LivePagedListBuilder(filterPostDataSource, config).build()
     }
 
 
