@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/white"
-        tools:context=".LoginActivity">
+        tools:context=".views.LoginActivity">
 
     <androidx.cardview.widget.CardView
             android:id="@+id/CrdAppBarLogin"
@@ -59,7 +59,7 @@
                 android:id="@+id/EdtEmailLogin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bck_ovel_shape"
+                android:background="@drawable/bg_ovel_shape"
                 android:textColorHint="@color/textHint"
                 android:drawablePadding="4dp"
                 android:inputType="textEmailAddress"
@@ -87,7 +87,7 @@
                 android:id="@+id/EdtPasswordLogin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bck_ovel_shape"
+                android:background="@drawable/bg_ovel_shape"
                 android:inputType="textPassword"
                 android:drawablePadding="@dimen/_4sdp"
                 android:textColorHint="@color/textHint"
@@ -112,7 +112,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="@drawable/bck_ovel_shape_button"
+            android:background="@drawable/bg_ovel_shape_button"
             android:text="@string/txt_btn_login"
             android:textColor="#fff"
             android:layout_margin="@dimen/_32sdp"

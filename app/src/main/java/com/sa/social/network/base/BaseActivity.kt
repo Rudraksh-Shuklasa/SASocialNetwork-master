@@ -11,6 +11,7 @@ import com.sa.social.network.R
 import com.sa.social.network.services.CheckConnetionService
 import android.content.Intent
 import android.provider.Settings
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 
 
 @SuppressLint("Registered")
@@ -46,5 +47,11 @@ open class BaseActivity : AppCompatActivity(), CheckConnetionService.Connectivit
 
     override fun onNetworkConnectionChanged(isConnected: Boolean) {
         showMessage(isConnected)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(CheckConnetionService());
+
     }
 }

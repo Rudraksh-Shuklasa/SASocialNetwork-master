@@ -1,22 +1,18 @@
 package com.sa.social.network.services
 
-import android.util.Log
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.sa.social.network.model.Notification
 import com.sa.social.network.repositories.NotificationRepositories
-import com.sa.social.network.repositories.ProfileDataRepositorie
 
 import android.app.PendingIntent
 import android.content.Intent
-import android.content.Context.NOTIFICATION_SERVICE
-import androidx.core.content.ContextCompat.getSystemService
 import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
-import android.os.Bundle
+import android.util.Log
 import androidx.core.app.NotificationCompat
-import com.sa.social.network.MainActivity
+import com.sa.social.network.views.MainActivity
 import com.sa.social.network.R
 
 
@@ -34,6 +30,8 @@ class FirebaseNotificationService : FirebaseMessagingService(){
             message!!.getNotification()!!.body!!,
             timestamp
             )
+
+        Log.d(TAG,"Reciving firebase notification")
 
         repos.uploadNotificationData(notification)
         sendNotification(message!!.getNotification()!!.body!!)
@@ -55,6 +53,7 @@ class FirebaseNotificationService : FirebaseMessagingService(){
         } else {
             currentapiVersion = R.drawable.ic_logo_splash
         }
+        Log.d(TAG,"Reciving firebase notification")
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val notificationBuilder = NotificationCompat.Builder(this, "fcm_channel")
