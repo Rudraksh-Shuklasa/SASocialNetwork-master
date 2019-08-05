@@ -17,6 +17,7 @@ import com.sa.social.network.model.User
 import com.sa.social.network.viewmodel.ChatViewModel
 import kotlinx.android.synthetic.main.fragment_chat.view.*
 import kotlinx.android.synthetic.main.fragment_chat_request.view.*
+import kotlinx.android.synthetic.main.fragment_home.view.*
 
 class ChatRequestFragment : Fragment()
 {
@@ -46,7 +47,8 @@ class ChatRequestFragment : Fragment()
         var userData=chatViewHolder.getUserData()
 
         view!!.ToolBackToChat.title="Friend Request"
-        view!!.ToolBackToChat.inflateMenu(R.menu.menu_friend_request);
+        view!!.ToolBackToChat.inflateMenu(R.menu.menu_friend_request)
+        view!!.ToolBackToChat.setTitleTextColor(resources.getColor(R.color.colorPrimaryDark))
         view!!.ToolBackToChat.setOnMenuItemClickListener(Toolbar.OnMenuItemClickListener{
 
             when(it.itemId)

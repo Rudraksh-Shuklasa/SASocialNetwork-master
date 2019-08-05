@@ -17,6 +17,7 @@ import com.sa.social.network.model.ChatUser
 import com.sa.social.network.model.User
 import com.sa.social.network.viewmodel.ChatViewModel
 import kotlinx.android.synthetic.main.fragment_chat.view.*
+import kotlinx.android.synthetic.main.fragment_chat_request.view.*
 
 class ChatFragment : Fragment()
 {
@@ -44,7 +45,8 @@ class ChatFragment : Fragment()
         view.PrgChatLoding.visibility=View.VISIBLE
 
         view!!.ToolAddPersonForChat.title="Chat"
-        view!!.ToolAddPersonForChat.inflateMenu(R.menu.menu_add_friend_chat);
+        view!!.ToolAddPersonForChat.inflateMenu(R.menu.menu_add_friend_chat)
+        view!!.ToolAddPersonForChat.setTitleTextColor(resources.getColor(R.color.colorPrimaryDark))
         view!!.ToolAddPersonForChat.setOnMenuItemClickListener(Toolbar.OnMenuItemClickListener{
 
             when(it.itemId)
