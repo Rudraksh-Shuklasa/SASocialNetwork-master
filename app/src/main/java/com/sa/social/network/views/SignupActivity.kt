@@ -28,9 +28,10 @@ class SignupActivity : BaseActivity() {
         val ss = SpannableString(txtLogin.text.toString())
 
         txtLogin.setOnClickListener {
-            var goToSignUp= Intent(this, LoginActivity::class.java)
-            startActivity(goToSignUp)
-            finish()
+
+                var goToSignUp= Intent(this, LoginActivity::class.java)
+                startActivity(goToSignUp)
+                finish()
         }
 
 
@@ -48,8 +49,19 @@ class SignupActivity : BaseActivity() {
 
 
         BtnSignup.setOnClickListener {
-            signupViewModel.signinUser(EdtEmailSignUp.text.toString(),EdtPasswordSignup.text.toString(),this)
-            PrgSignupProcess.visibility= View.VISIBLE
+            if(EdtEmailSignUp.text.toString().isEmpty() || EdtPasswordSignup.text.toString().isEmpty() || EdtConformationSignout.text.isEmpty())
+            {
+                Toast.makeText(this,"Please Enter All The Fields",Toast.LENGTH_SHORT).show()
+            }
+            else if(!EdtPasswordSignup.text.toString().equals( EdtConformationSignout.text.toString()))
+            {
+                Toast.makeText(this,"Please Enter Password and conform password same",Toast.LENGTH_SHORT).show()
+            }
+            else
+            {
+                signupViewModel.signinUser(EdtEmailSignUp.text.toString(),EdtPasswordSignup.text.toString(),this)
+                PrgSignupProcess.visibility= View.VISIBLE
+            }
         }
 
     }

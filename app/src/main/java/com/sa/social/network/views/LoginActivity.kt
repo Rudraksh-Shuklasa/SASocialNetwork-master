@@ -110,8 +110,15 @@ class LoginActivity : BaseActivity() {
         })
 
         BtnLogin.setOnClickListener {
-            loginViewModel.loginUser(EdtEmailLogin.text.toString(),EdtPasswordLogin.text.toString(),this)
-            PrgLoginProcess.visibility=View.VISIBLE
+            if(EdtEmailLogin.text.toString().isEmpty() || EdtPasswordLogin.text.isEmpty())
+            {
+                Toast.makeText(this,"Please Enter All The Fields",Toast.LENGTH_SHORT).show()
+            }
+            else{
+                loginViewModel.loginUser(EdtEmailLogin.text.toString(),EdtPasswordLogin.text.toString(),this)
+                PrgLoginProcess.visibility=View.VISIBLE
+            }
+
         }
 
         txtSignup.setOnClickListener {

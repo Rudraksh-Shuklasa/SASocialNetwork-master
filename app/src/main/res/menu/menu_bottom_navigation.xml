@@ -7,7 +7,7 @@
     />
     <item
             android:id="@+id/bottom_navigation_menu_notification"
-            android:title="Search"
+            android:title="Notification"
             android:icon="@drawable/ic_notification_mainactivity"
     />
     <item

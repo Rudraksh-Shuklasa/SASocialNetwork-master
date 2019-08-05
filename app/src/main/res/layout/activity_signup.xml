@@ -113,7 +113,7 @@
             android:layout_marginEnd="@dimen/_8sdp" android:layout_marginTop="8dp">
 
         <AutoCompleteTextView
-                android:id="@+id/edtConformationSignout"
+                android:id="@+id/EdtConformationSignout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_ovel_shape"
