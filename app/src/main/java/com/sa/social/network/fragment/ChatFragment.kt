@@ -73,6 +73,8 @@ class ChatFragment : Fragment()
 
         view.SwpLytChat.setOnRefreshListener(object : SwipeRefreshLayout.OnRefreshListener {
             override fun onRefresh() {
+                var userData=chatViewHolder.getChatUserData()
+
                 view.RcyUserChatListChatFragment.apply {
                     layoutManager=  GridLayoutManager(activity,1)
                     adapter = ChatUserAdapter(userData,context!!,chatViewHolder)
