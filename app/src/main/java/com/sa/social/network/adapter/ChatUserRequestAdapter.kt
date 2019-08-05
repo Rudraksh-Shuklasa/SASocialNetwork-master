@@ -34,7 +34,7 @@ class ChatUserRequestAdapter(var chatUser : ArrayList<User>, context: Context, c
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemView = LayoutInflater
             .from(parent.context)
-            .inflate(R.layout.item_chat_user, parent, false)
+            .inflate(R.layout.item_chat_user_request, parent, false)
         return ViewHolder(itemView)
     }
 

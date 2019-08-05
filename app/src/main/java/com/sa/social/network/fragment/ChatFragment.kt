@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.sa.social.network.R
 import com.sa.social.network.adapter.ChatUserAdapter
 import com.sa.social.network.adapter.ChatUserRequestAdapter
@@ -69,6 +70,17 @@ class ChatFragment : Fragment()
             layoutManager=  GridLayoutManager(activity,1)
             adapter = ChatUserAdapter(userData,context!!,chatViewHolder)
         }
+
+        view.SwpLytChat.setOnRefreshListener(object : SwipeRefreshLayout.OnRefreshListener {
+            override fun onRefresh() {
+                view.RcyUserChatListChatFragment.apply {
+                    layoutManager=  GridLayoutManager(activity,1)
+                    adapter = ChatUserAdapter(userData,context!!,chatViewHolder)
+                }
+                view.SwpLytChat.isRefreshing = false
+            }
+        })
+
         chatViewHolder.getChatUserLiveData().observe(this, Observer<ArrayList<ChatUser>> {
             view.RcyUserChatListChatFragment.apply {
                 layoutManager=  GridLayoutManager(activity,1)

@@ -126,12 +126,7 @@ class CommentsFragment : Fragment()
         return view
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        val transaction =activity!!.supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.FragMainActivity,HomeFragment.newInstance())
-        transaction.commit()
-    }
+
 
 
 
