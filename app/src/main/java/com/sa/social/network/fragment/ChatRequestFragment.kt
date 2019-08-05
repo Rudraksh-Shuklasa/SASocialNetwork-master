@@ -21,10 +21,10 @@ class ChatRequestFragment : Fragment()
     var TAG = this.javaClass.simpleName
     companion object {
 
-        fun newInstance(): ChatFragment {
+        fun newInstance(): ChatRequestFragment {
 
 
-            return  ChatFragment()
+            return  ChatRequestFragment()
         }
     }
 
@@ -38,7 +38,7 @@ class ChatRequestFragment : Fragment()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view = inflater.inflate(com.sa.social.network.R.layout.fragment_chat_request, container, false);
-        view.PrgChatLoding.visibility=View.VISIBLE
+        view.PrgRequestChatLoding.visibility=View.VISIBLE
         var userData=chatViewHolder.getUserData()
 
 

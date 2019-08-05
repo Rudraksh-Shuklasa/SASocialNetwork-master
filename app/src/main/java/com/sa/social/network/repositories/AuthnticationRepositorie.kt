@@ -156,22 +156,29 @@ class AuthnticationRepositorie(context: Context){
         editor.putString(SharedPrefrenceUtils.CurrentUserId, mAuth.currentUser!!.uid)
         editor.putString(SharedPrefrenceUtils.CurrentUserName, mAuth.currentUser!!.displayName)
         editor.commit()
-        var curretUserInfor= User(
-            user.email!!,
-            user.displayName!!,
-            user.metadata!!.creationTimestamp,
-            user.uid,
-            ""
-        )
-        fireDbInstance.collection("User")
-            .document(curretUserInfor!!.userId)
-            .set(curretUserInfor)
-            .addOnSuccessListener {
-                Log.d(TAG,user.toString())
+        var curretUserInfor=User(user.email!!, user.displayName!!,user.metadata!!.creationTimestamp,user.uid,"")
+
+        fireDbInstance.collection("User").document(curretUserInfor.userId).get().addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val document = task.result
+                if (document!!.exists()) {
+                    Log.d(TAG, "User is exists!")
+                } else {
+                    fireDbInstance.collection("User")
+                        .document(curretUserInfor!!.userId)
+                        .set(curretUserInfor)
+                        .addOnSuccessListener {
+                            Log.d(TAG,user.toString())
+                        }
+                        .addOnFailureListener {
+                            Log.d(TAG,it.message)
+                        }
+                }
+            } else {
+                Log.d(TAG, "Failed with: ", task.exception)
             }
-            .addOnFailureListener {
-                Log.d(TAG,it.message)
-            }
+        }
+
     }
 
 }

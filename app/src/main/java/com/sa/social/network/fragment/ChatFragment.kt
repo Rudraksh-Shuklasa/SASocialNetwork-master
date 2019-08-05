@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -40,6 +41,27 @@ class ChatFragment : Fragment()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view = inflater.inflate(com.sa.social.network.R.layout.fragment_chat, container, false);
         view.PrgChatLoding.visibility=View.VISIBLE
+
+        view!!.ToolAddPersonForChat.title="Chat"
+        view!!.ToolAddPersonForChat.inflateMenu(R.menu.menu_add_friend_chat);
+        view!!.ToolAddPersonForChat.setOnMenuItemClickListener(Toolbar.OnMenuItemClickListener{
+
+            when(it.itemId)
+            {
+                R.id.btn_add_person_chat ->
+                {
+                    val transaction =activity!!.supportFragmentManager.beginTransaction()
+                    transaction.replace(R.id.FragMainActivity,ChatRequestFragment.newInstance())
+                    transaction.addToBackStack("ChatFragment")
+                    transaction.commit()
+                }
+
+            }
+            return@OnMenuItemClickListener true
+
+
+
+        });
         var userData=chatViewHolder.getChatUserData()
 
 
@@ -67,12 +89,7 @@ class ChatFragment : Fragment()
         return view
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        val transaction =activity!!.supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.FragMainActivity,HomeFragment.newInstance())
-        transaction.commit()
-    }
+
 
 
 
