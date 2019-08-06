@@ -30,9 +30,9 @@ class ChatViewModel(application: Application):  AndroidViewModel(application){
         return ChatIsLoaded
     }
 
-    fun getUserData():ArrayList<User> {
+    fun getUserData(chatUser:ArrayList<ChatUser>):ArrayList<User> {
 
-        return repos.getUserData()
+        return repos.getUserData(chatUser)
     }
 
     fun addChatUser(user:User){

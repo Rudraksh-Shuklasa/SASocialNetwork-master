@@ -13,6 +13,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.sa.social.network.R
 import com.sa.social.network.adapter.ChatUserAdapter
 import com.sa.social.network.adapter.ChatUserRequestAdapter
+import com.sa.social.network.model.ChatUser
 import com.sa.social.network.model.User
 import com.sa.social.network.viewmodel.ChatViewModel
 import kotlinx.android.synthetic.main.fragment_chat.view.*
@@ -44,7 +45,11 @@ class ChatRequestFragment : Fragment()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view = inflater.inflate(com.sa.social.network.R.layout.fragment_chat_request, container, false);
         view.PrgRequestChatLoding.visibility=View.VISIBLE
-        var userData=chatViewHolder.getUserData()
+
+        var bundle = getArguments()
+        var chatUser=bundle!!.getSerializable("user") as ArrayList<ChatUser>
+
+        var userData=chatViewHolder.getUserData(chatUser)
 
         view!!.ToolBackToChat.title="Friend Request"
         view!!.ToolBackToChat.inflateMenu(R.menu.menu_friend_request)
@@ -70,7 +75,7 @@ class ChatRequestFragment : Fragment()
 
         view.SwpLytChatRequest.setOnRefreshListener(object : SwipeRefreshLayout.OnRefreshListener {
             override fun onRefresh() {
-                var userData=chatViewHolder.getUserData()
+                var userData=chatViewHolder.getUserData(chatUser)
                 view.RcyUserChatListRequestChatFragment.apply {
                     layoutManager=  GridLayoutManager(activity,1)
                     adapter = ChatUserRequestAdapter(userData,context!!,chatViewHolder)

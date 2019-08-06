@@ -9,6 +9,7 @@ import com.sa.social.network.model.Comments
 import com.sa.social.network.utils.SharedPrefrenceUtils
 import android.widget.Toast
 import com.google.firebase.firestore.*
+import com.sa.social.network.model.ChatMessage
 import com.sa.social.network.model.ChatUser
 import com.sa.social.network.model.User
 import com.sa.social.network.views.MainActivity
@@ -23,6 +24,7 @@ class ChatRepository(context : Context) {
     private var userLiveData = MutableLiveData<ArrayList<User>>()
     private var userAdded = MutableLiveData<Boolean>()
     private var chatUserdataLiveData = MutableLiveData<ArrayList<ChatUser>>()
+    private var currentUserId=sharedPrefManager!!.getString(SharedPrefrenceUtils.CurrentUserId, "user").toString()
 
     init{
         fireDbInstance = FirebaseFirestore.getInstance()
@@ -47,7 +49,7 @@ class ChatRepository(context : Context) {
     }
 
 
-    fun getUserData():ArrayList<User>
+    fun getUserData(chatUserList: ArrayList<ChatUser>):ArrayList<User>
     {
         val userList = ArrayList<User>()
         fireDbInstance.collection("User")
@@ -59,16 +61,31 @@ class ChatRepository(context : Context) {
 
                 val userList = ArrayList<User>()
                 for (user in value!!) {
-                    if(!user["userId"].toString().equals(sharedPrefManager!!.getString(SharedPrefrenceUtils.CurrentUserId, "user").toString()))
+
+                    if(!user["userId"].toString().equals(currentUserId))
                     {
-                        var userObject =User(
-                            user["email"].toString(),
-                            user["userName"].toString(),
-                            user["creationTimestamp"] as Long,
-                            user["userId"].toString(),
-                            user["profilePhotoUrl"].toString()
-                        )
-                        userList.add(userObject)
+                        var isUserIsChatUser=false
+                        for(chatUser  in chatUserList) {
+                            if(chatUser.userId.equals(user["userId"].toString()))
+                            {
+                                isUserIsChatUser=true
+                                break
+                            }
+
+                        }
+                        if(!isUserIsChatUser)
+                        {
+                            var userObject =User(
+                                user["email"].toString(),
+                                user["userName"].toString(),
+                                user["creationTimestamp"] as Long,
+                                user["userId"].toString(),
+                                user["profilePhotoUrl"].toString()
+                            )
+                            userList.add(userObject)
+                        }
+
+
                     }
                 }
                 userLiveData.postValue(userList)
@@ -80,10 +97,11 @@ class ChatRepository(context : Context) {
 
     }
 
+
     fun getChatUserData():ArrayList<ChatUser>
     {
         val userList = ArrayList<ChatUser>()
-        fireDbInstance.collection("User").document(sharedPrefManager!!.getString(SharedPrefrenceUtils.CurrentUserId, "user").toString())
+        fireDbInstance.collection("User").document(currentUserId)
             .collection("Friends")
             .addSnapshotListener { value, e ->
                 if (e != null) {
@@ -95,6 +113,7 @@ class ChatRepository(context : Context) {
                 for (user in value!!) {
 
                         var userObject =ChatUser(
+                            user["userId"].toString(),
                             user["userName"].toString(),
                             user["userProfilePicture"].toString(),
                             user["numberOfUnreadMessage"] as Long
@@ -111,8 +130,8 @@ class ChatRepository(context : Context) {
 
     fun addUserForChat(user:User)
     {
-        var chatUser = ChatUser(user.userName,user.profilePhotoUrl,0)
-        fireDbInstance.collection("User").document( sharedPrefManager!!.getString(SharedPrefrenceUtils.CurrentUserId, "user").toString())
+        var chatUser = ChatUser(user.userId,user.userName,user.profilePhotoUrl,0)
+        fireDbInstance.collection("User").document( currentUserId)
             .collection("Friends").document(user.userId)
             .set(chatUser)
             .addOnSuccessListener {
@@ -122,5 +141,7 @@ class ChatRepository(context : Context) {
                 Log.d(TAG,it.message)
             }
     }
+    
+
 
 }

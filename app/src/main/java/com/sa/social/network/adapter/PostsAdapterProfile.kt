@@ -1,6 +1,7 @@
 package com.sa.social.network.adapter
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
@@ -19,6 +20,7 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.sa.social.network.R
 import com.sa.social.network.model.Posts
+import kotlinx.android.synthetic.main.dialog_full_post.view.*
 
 class PostsAdapterProfile(val data: ArrayList<Posts>,val context:Context): RecyclerView.Adapter<PostsAdapterProfile.ViewHolder>()
 {
@@ -40,6 +42,12 @@ class PostsAdapterProfile(val data: ArrayList<Posts>,val context:Context): Recyc
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private var img: ImageView = view.findViewById(R.id.ImgPhotosFeed)
+        init {
+            img=view.findViewById(R.id.ImgPhotosFeed)
+            img.setOnClickListener {
+                uploadPOstDialog(data[adapterPosition].photosUrl)
+            }
+        }
 
         fun bind(url: String) {
             Glide.with(context).load(url).thumbnail(0.5f)
@@ -49,5 +57,28 @@ class PostsAdapterProfile(val data: ArrayList<Posts>,val context:Context): Recyc
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(img);
         }
+    }
+
+    fun uploadPOstDialog(url: String) {
+        val mDialogView = LayoutInflater.from(context).inflate(R.layout.dialog_full_post, null)
+        val mBuilder = android.app.AlertDialog.Builder(context)
+            .setView(mDialogView)
+            .setCancelable(false)
+        val mAlertDialog = mBuilder.show()
+
+        Glide.with(context).load(url).thumbnail(0.5f)
+            .centerCrop()
+            .placeholder(R.drawable.ic_avatar_profile)
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .transition(DrawableTransitionOptions.withCrossFade())
+            .into(mDialogView.ImgPostImage);
+
+
+
+        mDialogView.ImgCloseImageDialog.setOnClickListener {
+            mAlertDialog.dismiss()
+        }
+
+
     }
 }

@@ -25,8 +25,6 @@ class NotificationDataSource: PageKeyedDataSource<Query, Notification>()
     }
 
 
-
-
     init
     {
         fireDbInstance = FirebaseFirestore.getInstance()
@@ -67,7 +65,7 @@ class NotificationDataSource: PageKeyedDataSource<Query, Notification>()
 
                     nextSearchFor = fireDbInstance.collection("Notifications")
                         .orderBy("timestamp")
-                        .startAfter(notificationList)
+                        .startAfter(lastNotification)
                         .limit(5)
 
                     isNotificationLodeing.postValue(true)

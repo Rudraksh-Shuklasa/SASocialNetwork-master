@@ -34,9 +34,6 @@ class FilterPostDataSource(context : Context,description: String) : PageKeyedDat
 
     }
 
-
-
-
     init
     {
 

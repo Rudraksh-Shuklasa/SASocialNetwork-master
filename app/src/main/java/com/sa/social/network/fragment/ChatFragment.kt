@@ -43,7 +43,7 @@ class ChatFragment : Fragment()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view = inflater.inflate(com.sa.social.network.R.layout.fragment_chat, container, false);
         view.PrgChatLoding.visibility=View.VISIBLE
-
+        var userData=chatViewHolder.getChatUserData()
         view!!.ToolAddPersonForChat.title="Chat"
         view!!.ToolAddPersonForChat.inflateMenu(R.menu.menu_add_friend_chat)
         view!!.ToolAddPersonForChat.setTitleTextColor(resources.getColor(R.color.colorPrimaryDark))
@@ -53,10 +53,16 @@ class ChatFragment : Fragment()
             {
                 R.id.btn_add_person_chat ->
                 {
+                    var chatRequest=ChatRequestFragment.newInstance()
+                    val bundle = Bundle()
+                    val obj = userData
+                    bundle.putSerializable("user", obj)
+                    chatRequest.setArguments(bundle);
                     val transaction =activity!!.supportFragmentManager.beginTransaction()
-                    transaction.replace(R.id.FragMainActivity,ChatRequestFragment.newInstance())
+                    transaction.replace(R.id.FragMainActivity,chatRequest)
                     transaction.addToBackStack("ChatFragment")
                     transaction.commit()
+
                 }
 
             }
@@ -65,7 +71,7 @@ class ChatFragment : Fragment()
 
 
         });
-        var userData=chatViewHolder.getChatUserData()
+
 
 
         view.RcyUserChatListChatFragment.apply {
@@ -86,9 +92,10 @@ class ChatFragment : Fragment()
         })
 
         chatViewHolder.getChatUserLiveData().observe(this, Observer<ArrayList<ChatUser>> {
+            userData=it
             view.RcyUserChatListChatFragment.apply {
                 layoutManager=  GridLayoutManager(activity,1)
-                adapter = ChatUserAdapter(it,context!!,chatViewHolder)
+                adapter = ChatUserAdapter(userData,context!!,chatViewHolder)
             }
             view.PrgChatLoding.visibility=View.GONE
         })

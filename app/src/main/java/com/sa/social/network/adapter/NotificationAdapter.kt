@@ -77,6 +77,10 @@ class NotificationAdapter(var context: Context, notificationViewModel : Notifica
             }
         }
 
+    fun getNotificationAt(position: Int): Notification? {
+        return getItem(position)
+    }
+
 
 
 

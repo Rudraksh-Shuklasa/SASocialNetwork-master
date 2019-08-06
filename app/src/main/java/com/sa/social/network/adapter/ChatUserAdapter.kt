@@ -1,6 +1,7 @@
 package com.sa.social.network.adapter
 
 import android.content.Context
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,10 +12,13 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.sa.social.network.R
+import com.sa.social.network.fragment.ChatFragment
 import com.sa.social.network.model.ChatUser
 import com.sa.social.network.model.User
 import com.sa.social.network.viewmodel.ChatViewModel
-
+import androidx.appcompat.app.AppCompatActivity
+import com.sa.social.network.fragment.ChatRequestFragment
+import com.sa.social.network.fragment.ChatScreenFragment
 
 
 class ChatUserAdapter(var chatUser : ArrayList<ChatUser>, context: Context, chatViewHolder: ChatViewModel): RecyclerView.Adapter<ChatUserAdapter.ViewHolder>()
@@ -54,6 +58,20 @@ class ChatUserAdapter(var chatUser : ArrayList<ChatUser>, context: Context, chat
             userImg=view.findViewById(R.id.ImgUserProfileChatItem)
             userName=view.findViewById(R.id.TxtUserNameChatItem)
             unreadCount=view.findViewById(R.id.TxtNumberOfUnreadMessages)
+
+            view.setOnClickListener {
+                var chatScreen=ChatScreenFragment.newInstance()
+                val bundle = Bundle()
+                val obj = chatUser[adapterPosition]
+                bundle.putSerializable("user", obj)
+                chatScreen.setArguments(bundle)
+
+                val activity = view.context as AppCompatActivity
+                val transaction =activity.getSupportFragmentManager().beginTransaction()
+                transaction.replace(R.id.FragMainActivity, chatScreen)
+                transaction.addToBackStack("ChatFragment")
+                transaction.commit()
+            }
 
 
         }

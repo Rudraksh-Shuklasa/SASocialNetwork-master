@@ -25,6 +25,18 @@ class NotificationRepositories {
         return notificationLiveData
     }
 
+    fun deleteNotification(notification:Notification){
+        fireDbInstance
+            .collection("Notification")
+            .document(notification.notificationId)
+            .delete().addOnSuccessListener{
+                Log.d(TAG,"Notification Deleted")
+            }
+            .addOnFailureListener {
+                Log.d(TAG,"Notification Not Deleted")
+            }
+    }
+
 
 
     fun uploadNotificationData(notification: Notification){

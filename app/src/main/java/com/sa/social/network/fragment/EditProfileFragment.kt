@@ -60,8 +60,7 @@ class EditProfileFragment : Fragment(){
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var binding = DataBindingUtil.inflate<FragmentEditProfileBinding>(inflater, R.layout.fragment_edit_profile, container, false)
-        var bundle = getArguments();
-
+        var bundle = getArguments()
         var view= binding.root
         user=editProfileViewModel.getProfile()
         binding.model=bundle!!.getSerializable("user") as User

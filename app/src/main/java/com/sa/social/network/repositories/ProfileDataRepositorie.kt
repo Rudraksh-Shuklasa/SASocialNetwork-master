@@ -157,6 +157,8 @@ class ProfileDataRepositorie (context: Context){
             .addOnFailureListener {
                 Log.d(TAG,it.message)
             }
+
+        fireDbInstance.collection("User")
         getProfile()
     }
 

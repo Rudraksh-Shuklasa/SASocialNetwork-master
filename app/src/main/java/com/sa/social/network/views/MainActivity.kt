@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.MenuItem
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -31,7 +32,7 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
         val extras = intent.extras
         if(extras!=null)
         {
@@ -87,13 +88,7 @@ class MainActivity : BaseActivity() {
     }
 
     override fun onBackPressed() {
-        if (BtnBottonNavigationMainActivity.getSelectedItemId() !== R.id.bottom_navigation_menu_home) {
-            val transaction = getSupportFragmentManager().beginTransaction()
-            transaction.replace(R.id.FragMainActivity, HomeFragment.newInstance() )
-            transaction.commit()
-            BtnBottonNavigationMainActivity.setSelectedItemId(R.id.bottom_navigation_menu_home)
-        }
-        else{
+
             if (doubleBackToExitPressedOnce) {
                 super.onBackPressed()
                 return
@@ -103,6 +98,6 @@ class MainActivity : BaseActivity() {
             Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show()
 
             Handler().postDelayed(Runnable { doubleBackToExitPressedOnce = false }, 2000)
-        }
+
     }
 }

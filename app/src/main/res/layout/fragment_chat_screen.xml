@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   xmlns:tools="http://schemas.android.com/tools" android:orientation="vertical"
+                                                   android:layout_width="match_parent"
+                                                   android:fitsSystemWindows="true"
+                                                   android:layout_height="match_parent">
+
+
+    <com.google.android.material.card.MaterialCardView android:layout_width="match_parent"
+                                                       android:layout_height="@dimen/_46sdp"
+                                                       android:backgroundTint="@color/colorPrimary"
+                                                       app:layout_constraintTop_toTopOf="parent"
+                                                       app:layout_constraintStart_toStartOf="parent"
+                                                       app:layout_constraintEnd_toEndOf="parent"
+                                                       android:id="@+id/materialCardView">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
+                                                           android:layout_height="match_parent">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/ImgUserProfileChatScreen"
+                    android:layout_width="@dimen/_32sdp"
+                    android:layout_height="@dimen/_32sdp"
+                    android:layout_marginLeft="@dimen/_4sdp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:src="@drawable/ic_avatar_profile"
+                    app:civ_border_color="@android:color/white"
+                    app:civ_border_width="@dimen/_1sdp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <TextView
+                    android:id="@+id/TxtUserNameChatScreen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rudraksh Shukla"
+                    android:textSize="@dimen/_12sdp"
+                    android:textColor="@android:color/white"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/ImgUserProfileChatScreen"
+                    android:layout_marginStart="@dimen/_12sdp"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <ProgressBar
+            android:id="@+id/PrgChatMessageLoding"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateTintMode="src_atop"
+            android:indeterminateTint="@color/colorPrimary"
+            android:layout_gravity="center"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/RcyChatMessages"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/view2"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="@dimen/_4sdp"
+            app:reverseLayout="true"
+            app:stackFromEnd="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="@dimen/_4sdp" app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintTop_toBottomOf="@+id/materialCardView">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <View android:layout_width="match_parent"
+          android:layout_height="@dimen/_1sdp"
+          android:background="@color/colorPrimary"
+          app:layout_constraintBottom_toTopOf="@+id/LytAddChat" android:id="@+id/view2"/>
+    <LinearLayout
+            android:id="@+id/LytAddChat"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/_38sdp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+        <EditText
+                android:id="@+id/TxtChat"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:paddingLeft="8dp"
+                android:paddingRight="6dp"/>
+
+        <Button
+                android:id="@+id/BtnAddChat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:text="Send"
+                android:enabled="false"
+                android:textStyle="bold"
+                android:textColor="@color/lightPrimary"
+                android:clickable="false"
+                android:textSize="@dimen/_12sdp"
+                android:layout_marginLeft="@dimen/_6sdp"
+                android:layout_marginRight="@dimen/_6sdp"/>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

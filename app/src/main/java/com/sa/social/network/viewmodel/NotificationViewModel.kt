@@ -11,6 +11,7 @@ import com.google.firebase.firestore.Query
 import com.sa.social.network.model.Notification
 import com.sa.social.network.datasource.NotificationDataSource
 import com.sa.social.network.datasource.NotificationDataSourceFectory
+import com.sa.social.network.repositories.NotificationRepositories
 
 class NotificationViewModel(application: Application) : AndroidViewModel(application)
 {
@@ -19,6 +20,7 @@ class NotificationViewModel(application: Application) : AndroidViewModel(applica
     var notificationPagedList: LiveData<PagedList<Notification>>
     var notificationLiveDataSource: LiveData<PageKeyedDataSource<Query, Notification>>
     var notificationDataSourceFactory: NotificationDataSourceFectory
+    private var repos= NotificationRepositories()
     init {
         notificationDataSourceFactory = NotificationDataSourceFectory()
 
@@ -36,6 +38,9 @@ class NotificationViewModel(application: Application) : AndroidViewModel(applica
 
     }
 
+    fun deleteNotification(notification: Notification){
+        repos.deleteNotification(notification)
+    }
     fun refreshNotification() {
         notificationDataSourceFactory.getNotificationLiveDataSource().getValue()?.invalidate();
     }
